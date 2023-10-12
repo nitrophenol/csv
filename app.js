@@ -22,7 +22,7 @@ fs.createReadStream('employee_data.csv')
     const date = row['Time Out'];
     const timeOut = row['Time Out'];
     const timeIn = row['Time'];
-    console.log( date.split(" ")[0]);
+    //console.log( date.split(" ")[0]);
     if (employeeName) {
       if (!employees[employeeName]) {
         employees[employeeName] = {
@@ -54,7 +54,7 @@ fs.createReadStream('employee_data.csv')
           }
         }
         if (employees[employeeName].previousEntry != null) {
-            console.log(employees[employeeName].previousEntry.split(" ")[0].split("/")[1]);
+           // console.log(employees[employeeName].previousEntry.split(" ")[0].split("/")[1]);
            // (employees[employeeName].previousEntry.split(" ")[0].split("/")[1]) - (date.split(" ")[0].split("/")[1]) ? employees[employeeName].consecutiveDays++ : employees[employeeName].consecutiveDays = 1;
             if ((employees[employeeName].previousEntry.split(" ")[0].split("/")[1]) - (date.split(" ")[0].split("/")[1])==-1) {
               employees[employeeName].consecutiveDays++
