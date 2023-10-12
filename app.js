@@ -8,14 +8,7 @@ function calculateTimeDifference(start, end) {
   const endTime = DateTime.fromFormat(end, 'MM/dd/yyyy hh:mm a');
   return endTime.diff(startTime, 'hours').hours;
 }
-function isConsecutiveDays(date1, date2) {
-  if (!date1 || !date2) {
-    return false;
-  }
-  const day1 = DateTime.fromFormat(date1, 'MM/dd/yyyy');
-  const day2 = DateTime.fromFormat(date2, 'MM/dd/yyyy');
-  return day2.diff(day1, 'days').days === 1;
-}
+
 const employees = {};
 const hasConsecutiveDays = [];
 const haslongShifts = [];
@@ -29,7 +22,7 @@ fs.createReadStream('employee_data.csv')
     const date = row['Time Out'];
     const timeOut = row['Time Out'];
     const timeIn = row['Time'];
-   // console.log(positionId, employeeName, date, timeOut, timeIn);
+    //console.log( date.split(" ")[0]);
     if (employeeName) {
       if (!employees[employeeName]) {
         employees[employeeName] = {
@@ -38,7 +31,7 @@ fs.createReadStream('employee_data.csv')
           hoursWorked: 0,
         };
       }
-      if (employees[employeeName].consecutiveDays >= 7) {
+      if (employees[employeeName].consecutiveDays >= 6) {
         //console.log(`${employeeName} has worked for 7 consecutive days.`);
         hasConsecutiveDays.push(employeeName);
       }
@@ -60,13 +53,20 @@ fs.createReadStream('employee_data.csv')
             haslessThan10Hours.push(employeeName);
           }
         }
-        if (employees[employeeName].previousEntry == null) {
-          employees[employeeName].previousEntry = date;
+        if (employees[employeeName].previousEntry != null) {
+           // console.log(employees[employeeName].previousEntry.split(" ")[0].split("/")[1]);
+           // (employees[employeeName].previousEntry.split(" ")[0].split("/")[1]) - (date.split(" ")[0].split("/")[1]) ? employees[employeeName].consecutiveDays++ : employees[employeeName].consecutiveDays = 1;
+            if ((employees[employeeName].previousEntry.split(" ")[0].split("/")[1]) - (date.split(" ")[0].split("/")[1])==-1) {
+              employees[employeeName].consecutiveDays++
+            }
+            if((employees[employeeName].previousEntry.split(" ")[0].split("/")[1]) - (date.split(" ")[0].split("/")[1])<-1){
+              employees[employeeName].consecutiveDays = 1;
+            }
         } else {
-          if (isConsecutiveDays(employees[employeeName].previousEntry, date)) {
-            employees[employeeName].consecutiveDays++;
-          }
+          employees[employeeName].consecutiveDays = 1;
         }
+  
+        
         employees[employeeName].previousEntry = date;
       }
     }
