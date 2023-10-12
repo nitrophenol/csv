@@ -48,12 +48,12 @@ fs.createReadStream('employee_data.csv')
       }
       if (date && timeOut && timeIn) {
         //  const currentEntryTimeDiff = calculateTimeDifference(timeIn, timeOut);
-        if (date == employees[employeeName].previousEntry) {
-          employees[employeeName].hoursWorked = calculateTimeDifference(timeIn, timeOut) + employees[employeeName].hoursWorked;
-        }
-        else {
+        // if (date == employees[employeeName].previousEntry) {
+        //   employees[employeeName].hoursWorked = calculateTimeDifference(timeIn, timeOut) + employees[employeeName].hoursWorked;
+        // }
+        // else {
           employees[employeeName].hoursWorked = calculateTimeDifference(timeIn, timeOut);
-        }
+     //   }
         if (employees[employeeName].previousEntry != null) {
           const currentEntryTimeDiff = calculateTimeDifference(employees[employeeName].previousEntry, timeIn);
           if (currentEntryTimeDiff < 10 && currentEntryTimeDiff > 1) {
